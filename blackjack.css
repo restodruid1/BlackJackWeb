@@ -1,0 +1,12 @@
+body {
+    background-color: darkgreen;
+}
+
+#dealer-cards {
+    text-align: center;
+}
+#dealer-cards img {
+    margin: 5px;
+    height: 200px;
+    width: 150px;
+}
