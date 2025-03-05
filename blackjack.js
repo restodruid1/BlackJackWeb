@@ -32,7 +32,6 @@ async function showCard(numPlayers) {
             //console.log(Math.floor(i/2));
             if (Math.floor(i/2) == 0) {
                 hiddenCard = card.src;
-                console.log(hiddenCard);
                 card.src = "images/cards/BACK.png";
                 document.getElementById("dealer-cards").append(card);
             }
@@ -96,7 +95,8 @@ function resetGame() {
     document.getElementById("dealer").innerHTML = "<h2 id=\"dealer-cards\"></h2>";
     document.getElementById("player").innerHTML = "";
     document.getElementById("player").innerHTML = "<h2 id=\"player-cards\"></h2>";
-    document.getElementById("winner").innerHTML = "";
+    document.getElementById("winner").innerText = "";
+    //document.getElementById("result").innerHTML = "";
     if (deck.length < 10) {
         console.log("Shuffling New Deck");
         buildDeck();
@@ -125,23 +125,20 @@ async function dealerLogic() {
             console.log(dealerValue);
             await delay(2000);
         }
-        //if (dealerValue > 21) {
-        //    console.log("dealer busted");
-        //}
     }
-    //else {
-    //    console.log("player lost");
-    //}
-    compareValues()
+    compareValues();
+    await delay(1000);
     resetGame();
 }
 
-async function compareValues() {
-    //let result = document.getElementById("winner");
+function compareValues() {
+    let result = document.getElementById("winner");
+    console.log(result);
+    //await delay(5000);
 
-    if (playerBusted) {
-        //result.innerText = "You Lost";
-        document.getElementById("winner").innerText = "You Lost";
+    if (playerBusted == true) {
+        result.innerText = "You Lost";
+        console.log(result);
     }
     else if (dealerValue > 21) {
         result.innerText = "You Won";
@@ -154,9 +151,7 @@ async function compareValues() {
     } 
     else {
         result.innerText = "You Push";
-    }
-
-    await delay(3000);
+    }  
 }
 
 function getValue(card) {

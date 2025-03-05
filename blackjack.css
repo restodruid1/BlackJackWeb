@@ -39,6 +39,14 @@ body {
     right: 100px;
 }
 
-#winner {
+#result {
+    position: absolute;
+    text-align: center;
     font-size: large;
+    top: 300px;
+    left: 100px;
+    right: 100px;
+}
+#winner {
+    font-size: 32px;
 }
