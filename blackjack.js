@@ -70,6 +70,10 @@ async function showButtons () {
     let stayVar = document.getElementById("stay"); 
     stayVar.style.display = "inline-block";
     stayVar.addEventListener("click", stay);
+
+    let doubleDownVar = document.getElementById("double-down"); 
+    doubleDownVar.style.display = "inline-block";
+    doubleDownVar.addEventListener("click", doubleDown);
 }
 
 function hit() {
@@ -88,6 +92,23 @@ function hit() {
 function stay() {
     // Player stays, run dealer logic
     dealerLogic();   
+}
+
+function doubleDown() {     // Only get 1 card
+    dealCard();
+    let card = document.createElement("img");
+    card.src = "images/cards/" + cards.at(-1) + ".png";
+    document.getElementById("player-cards").append(card);
+    playerValue += getValue(cards.at(-1));
+    if (playerValue > 21) {
+        console.log("Player Busted");
+        playerBusted = true;
+        dealerLogic();
+    } 
+    else {
+        console.log(playerValue);
+        dealerLogic();
+    }   
 }
 
 function resetGame() {
