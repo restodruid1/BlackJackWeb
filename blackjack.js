@@ -77,6 +77,7 @@ async function showButtons () {
 }
 
 function hit() {
+    document.getElementById("double-down").style = "display:none;"; //Hide DD button
     dealCard();
     let card = document.createElement("img");
     card.src = "images/cards/" + cards.at(-1) + ".png";
@@ -111,6 +112,12 @@ function doubleDown() {     // Only get 1 card
     }   
 }
 
+function hideButtons() {
+    document.getElementById("hit").style = "display:none;";
+    document.getElementById("stay").style = "display:none;";
+    document.getElementById("double-down").style = "display:none;";
+}
+
 function resetGame() {
     document.getElementById("dealer").innerHTML = "";
     document.getElementById("dealer").innerHTML = "<h2 id=\"dealer-cards\"></h2>";
@@ -130,6 +137,7 @@ function resetGame() {
 }
 
 async function dealerLogic() {
+    hideButtons();
     let hidden = document.getElementById("dealer-cards");
     //console.log(hidden);
     hidden.firstChild.src = hiddenCard;
