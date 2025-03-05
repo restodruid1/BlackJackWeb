@@ -2,6 +2,8 @@ let playerValue = 0;
 let dealerValue = 0;
 let hiddenCard = ""
 let playerBusted = false;
+let playerAceCount = 0;
+let dealerAceCount = 0;
 
 window.onload = function() {
     buildDeck();
@@ -26,10 +28,18 @@ async function showCard(numPlayers) {
         console.log(cards[i]);
         
         if (i % 2 == 0) {   // This is the player
+            if (cards[i][0] == "A") {
+                playerAceCount += 1;
+                console.log("Player ACE COUNT: " + playerAceCount);
+            }
             document.getElementById("player-cards").append(card);
         }
         else {  // This is the dealers cards
             //console.log(Math.floor(i/2));
+            if (cards[i][0] == "A") {
+                dealerAceCount += 1;
+                console.log("DEALER ACE COUNT: " + dealerAceCount);
+            }
             if (Math.floor(i/2) == 0) {
                 hiddenCard = card.src;
                 card.src = "images/cards/BACK.png";
@@ -54,10 +64,27 @@ function playGame() {
         showCard(2);
         playerValue += getValue(cards[0]) + getValue(cards[2]);
         dealerValue += getValue(cards[1]) + getValue(cards[3]);
+        handleAces("player");
+        handleAces("dealer");
         console.log(playerValue, dealerValue);
         showButtons();
         
         break;
+    }
+}
+
+function handleAces(player) {
+    if (player == "player") {   // Player hand value
+        while (playerValue > 21 && playerAceCount > 0) {
+            playerAceCount -= 1;
+            playerValue -= 10;
+        }
+    }
+    else {  // Dealer hand value
+        while (dealerValue > 21 && dealerAceCount > 0) {
+            dealerAceCount -= 1;
+            dealerValue -= 10;
+        }
     }
 }
 
@@ -83,6 +110,10 @@ function hit() {
     card.src = "images/cards/" + cards.at(-1) + ".png";
     document.getElementById("player-cards").append(card);
     playerValue += getValue(cards.at(-1));
+    if (cards.at(-1)[0] == "A") {
+        playerAceCount += 1;
+    }
+    handleAces("player");
     if (playerValue > 21) {
         console.log("Player Busted");
         playerBusted = true;
@@ -101,6 +132,10 @@ function doubleDown() {     // Only get 1 card
     card.src = "images/cards/" + cards.at(-1) + ".png";
     document.getElementById("player-cards").append(card);
     playerValue += getValue(cards.at(-1));
+    if (cards.at(-1)[0] == "A") {
+        playerAceCount += 1;
+    }
+    handleAces("player");
     if (playerValue > 21) {
         console.log("Player Busted");
         playerBusted = true;
@@ -133,6 +168,8 @@ function resetGame() {
     playerBusted = false;
     playerValue = 0;
     dealerValue = 0;
+    playerAceCount = 0;
+    dealerAceCount = 0;
     playGame();
 }
 
@@ -143,7 +180,7 @@ async function dealerLogic() {
     hidden.firstChild.src = hiddenCard;
     await delay(2000);
     //console.log(hidden);
-    if (playerBusted == false) {    // Dealer hits 
+    if (playerBusted == false) {    // Dealer hits, else dealer no hit
         while (dealerValue < 17) {
             //await delay(2000);
             dealCard();
@@ -151,12 +188,24 @@ async function dealerLogic() {
             card.src = "images/cards/" + cards.at(-1) + ".png";
             document.getElementById("dealer-cards").append(card);
             dealerValue += getValue(cards.at(-1));
+            if (cards.at(-1)[0] == "A") {
+                dealerAceCount += 1;
+            }
+            handleAces("dealer");
             console.log(dealerValue);
             await delay(2000);
         }
     }
     compareValues();
     await delay(1000);
+    //resetGame();
+    let dealVar = document.getElementById("deal"); 
+    dealVar.style.display = "inline-block";
+    dealVar.addEventListener("click", deal);
+}
+
+function deal() {
+    document.getElementById("deal").style = "display:none;";
     resetGame();
 }
 
