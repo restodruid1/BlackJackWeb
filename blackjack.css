@@ -11,21 +11,22 @@ body {
     position: absolute;
 }
 
-#dealer-cards img {
+#player-cards img, #dealer-cards img {
     margin: 5px;
     height: 200px;
     width: 150px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
-
-#player-cards img {
-    margin: 5px;
-    height: 200px;
-    width: 150px;
+#player-cards:hover img, #dealer-cards:hover img {
+    transform: translateY(-10px) rotate(0deg);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
 }
 
 #player {
     text-align: center;
-    bottom: 20px;
+    bottom: 30px;
     left: 100px;
     right: 100px;
     position: absolute;
@@ -43,7 +44,7 @@ body {
     position: absolute;
     text-align: center;
     font-size: large;
-    top: 300px;
+    top: 400px;
     left: 100px;
     right: 100px;
 }
@@ -52,7 +53,7 @@ body {
 }
 
 #p-score, #d-score {
-    width: 100px;       /* Adjust width */
+    width: 50px;       /* Adjust width */
     height: 50px;       /* Adjust height */
     background-color: #ddd;  /* Light gray background */
     border-radius: 10px; /* Rounded corners */
@@ -65,11 +66,35 @@ body {
 
 #p-score {
     position: absolute;
-    top: 400px;
+    top: 625px;
     left:700px;
 }
 #d-score {
     position: absolute;
     top: 250px;
     left:700px;
+}
+
+#hit, #stay, #double-down, #deal {
+    background: linear-gradient(135deg, #ff7b00, #ffbb00);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#hit:hover, #stay:hover, #double-down:hover, #deal:hover{
+    background: linear-gradient(135deg, #ffbb00, #ff7b00);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+#hit:active, #stay:active #double-down:active, #deal:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
