@@ -50,3 +50,26 @@ body {
 #winner {
     font-size: 42px;
 }
+
+#p-score, #d-score {
+    width: 100px;       /* Adjust width */
+    height: 50px;       /* Adjust height */
+    background-color: #ddd;  /* Light gray background */
+    border-radius: 10px; /* Rounded corners */
+    text-align: center;  /* Center text */
+    line-height: 50px;   /* Align text vertically */
+    font-weight: bold;
+    display: inline-block; /* Prevent full-width stretching */
+    margin: 10px;        /* Add spacing */
+}
+
+#p-score {
+    position: absolute;
+    top: 400px;
+    left:700px;
+}
+#d-score {
+    position: absolute;
+    top: 250px;
+    left:700px;
+}

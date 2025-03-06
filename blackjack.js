@@ -22,7 +22,7 @@ function dealCard () {
 async function showCard(numPlayers) {
     for (let i = 0; i < numPlayers*2; i++) {
         //dealCard();
-        await delay(1000);
+        await delay(750);
         let card = document.createElement("img");
         card.src = "images/cards/" + cards[i] + ".png";
         console.log(cards[i]);
@@ -51,24 +51,44 @@ async function showCard(numPlayers) {
             
         }   
     }
+    handleAces("player");
+    // Show scores
+    playerAceCount > 0 ? document.getElementById("p-score").innerHTML = `${playerValue}/${playerValue - 10}`: document.getElementById("p-score").innerHTML = playerValue;
+    document.getElementById("d-score").innerHTML = dealerValue - getValue(cards[1]);
+    handleAces("dealer");
+    console.log(playerValue, dealerValue);
+    
 }
     
 
-function playGame() {
+async function playGame() {
     while (true) {
         cards = [];
         dealCard();
         dealCard();
         dealCard();
         dealCard();  
-        showCard(2);
         playerValue += getValue(cards[0]) + getValue(cards[2]);
         dealerValue += getValue(cards[1]) + getValue(cards[3]);
-        handleAces("player");
-        handleAces("dealer");
-        console.log(playerValue, dealerValue);
-        showButtons();
-        
+        showCard(2);
+        //playerValue += getValue(cards[0]) + getValue(cards[2]);
+        //dealerValue += getValue(cards[1]) + getValue(cards[3]);
+        await delay(2750);
+        document.getElementById("p-score").style.display = "inline-block";
+        document.getElementById("d-score").style.display = "inline-block";
+        if (dealerValue == 21) {
+            dealerLogic();
+        }
+        else if (playerValue == 21) {
+            compareValues();
+            let dealVar = document.getElementById("deal"); 
+            dealVar.style.display = "inline-block";
+            dealVar.addEventListener("click", deal);
+        }
+        else {
+            showButtons();
+        }
+           
         break;
     }
 }
@@ -89,7 +109,7 @@ function handleAces(player) {
 }
 
 async function showButtons () {
-    await delay(4500);
+    await delay(1000);
     let hitVar = document.getElementById("hit");
     hitVar.style.display = "inline-block";
     hitVar.addEventListener("click", hit);
@@ -114,6 +134,7 @@ function hit() {
         playerAceCount += 1;
     }
     handleAces("player");
+    playerAceCount > 0 ? document.getElementById("p-score").innerHTML = `${playerValue}/${playerValue - 10}`: document.getElementById("p-score").innerHTML = playerValue;
     if (playerValue > 21) {
         console.log("Player Busted");
         playerBusted = true;
@@ -136,6 +157,7 @@ function doubleDown() {     // Only get 1 card
         playerAceCount += 1;
     }
     handleAces("player");
+    playerAceCount > 0 ? document.getElementById("p-score").innerHTML = `${playerValue}/${playerValue - 10}`: document.getElementById("p-score").innerHTML = playerValue;
     if (playerValue > 21) {
         console.log("Player Busted");
         playerBusted = true;
@@ -159,6 +181,10 @@ function resetGame() {
     document.getElementById("player").innerHTML = "";
     document.getElementById("player").innerHTML = "<h2 id=\"player-cards\"></h2>";
     document.getElementById("winner").innerText = "";
+    document.getElementById("d-score").innerText = "";
+    document.getElementById("p-score").innerText = "";
+    document.getElementById("p-score").style = "display:none;";
+    document.getElementById("d-score").style = "display:none;";
     //document.getElementById("result").innerHTML = "";
     if (deck.length < 10) {
         console.log("Shuffling New Deck");
@@ -178,7 +204,8 @@ async function dealerLogic() {
     let hidden = document.getElementById("dealer-cards");
     //console.log(hidden);
     hidden.firstChild.src = hiddenCard;
-    await delay(2000);
+    dealerAceCount > 0 ? document.getElementById("d-score").innerHTML = `${dealerValue}/${dealerValue - 10}`: document.getElementById("d-score").innerHTML = dealerValue;
+    await delay(1000);
     //console.log(hidden);
     if (playerBusted == false) {    // Dealer hits, else dealer no hit
         while (dealerValue < 17) {
@@ -192,12 +219,14 @@ async function dealerLogic() {
                 dealerAceCount += 1;
             }
             handleAces("dealer");
+            dealerAceCount > 0 ? document.getElementById("d-score").innerHTML = `${dealerValue}/${dealerValue - 10}`: document.getElementById("d-score").innerHTML = dealerValue;
             console.log(dealerValue);
-            await delay(2000);
+            await delay(1000);
         }
+        dealerAceCount > 0 ? document.getElementById("d-score").innerHTML = `${dealerValue}/${dealerValue - 10}`: document.getElementById("d-score").innerHTML = dealerValue;
     }
     compareValues();
-    await delay(1000);
+    //await delay(500);
     //resetGame();
     let dealVar = document.getElementById("deal"); 
     dealVar.style.display = "inline-block";
