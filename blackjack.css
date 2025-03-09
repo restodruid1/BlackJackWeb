@@ -17,7 +17,7 @@ body {
     width: 150px;
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    /*transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;*/
 }
 #player-cards:hover img, #dealer-cards:hover img {
     transform: translateY(-10px) rotate(0deg);

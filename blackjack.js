@@ -74,8 +74,8 @@ async function playGame() {
         //playerValue += getValue(cards[0]) + getValue(cards[2]);
         //dealerValue += getValue(cards[1]) + getValue(cards[3]);
         await delay(2750);
-        document.getElementById("p-score").style.display = "inline-block";
-        document.getElementById("d-score").style.display = "inline-block";
+        //document.getElementById("p-score").style.display = "inline-block";
+        //document.getElementById("d-score").style.display = "inline-block";
         if (dealerValue == 21) {
             dealerLogic();
         }
@@ -183,8 +183,8 @@ function resetGame() {
     document.getElementById("winner").innerText = "";
     document.getElementById("d-score").innerText = "";
     document.getElementById("p-score").innerText = "";
-    document.getElementById("p-score").style = "display:none;";
-    document.getElementById("d-score").style = "display:none;";
+    //document.getElementById("p-score").style = "display:none;";
+    //document.getElementById("d-score").style = "display:none;";
     //document.getElementById("result").innerHTML = "";
     if (deck.length < 10) {
         console.log("Shuffling New Deck");
