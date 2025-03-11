@@ -66,12 +66,12 @@ body {
 
 #p-score {
     position: absolute;
-    top: 625px;
+    top: 550px;
     left:700px;
 }
 #d-score {
     position: absolute;
-    top: 250px;
+    top: 350px;
     left:700px;
 }
 
